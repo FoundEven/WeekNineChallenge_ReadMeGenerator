@@ -44,7 +44,7 @@ function writeToFile() {
         },
         {
             type: 'input',
-            message: 'Write how you other people could test your application.',
+            message: 'Write how other people could test your application.',
             name: 'test',
         },
         {
@@ -62,7 +62,7 @@ function writeToFile() {
     licenseL = genMark.renderLicenseLink(data.license);
     badge = genMark.renderLicenseBadge(data.license);
 
-    fs.writeFile('README.md', (genMark.generateMarkdown(data, licenseL, badge)) , (err) => {
+    fs.writeFile('README_Ex.md', (genMark.generateMarkdown(data, licenseL, badge)) , (err) => {
     err ? console.error(err) : console.log('Success!')
     });
 
@@ -81,7 +81,3 @@ function init() {
 // Function call to initialize app
 init();
 
-
-//fs.writeFile('README.md', readMeTemp, (err) =>
-//err ? console.error(err) : console.log('Success!')
-//)
