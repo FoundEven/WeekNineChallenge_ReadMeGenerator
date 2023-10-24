@@ -62,7 +62,7 @@ function writeToFile() {
     licenseL = genMark.renderLicenseLink(data.license);
     badge = genMark.renderLicenseBadge(data.license);
 
-    fs.writeFile('README_Ex.md', (genMark.generateMarkdown(data, licenseL, badge)) , (err) => {
+    fs.writeFile('README_Ex2.md', (genMark.generateMarkdown(data, licenseL, badge)) , (err) => {
     err ? console.error(err) : console.log('Success!')
     });
 
