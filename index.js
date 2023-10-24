@@ -3,8 +3,8 @@ const inquirer = require("inquirer");
 const fs = require('fs');
 const genMark = require('./generateMarkdown.js');
 // TODO: Create an array of questions for user input
-const questions = [];
-
+let licenseL = '';
+let badge = '';
 
 // TODO: Create a function to write README file
 function writeToFile() {
@@ -34,7 +34,7 @@ function writeToFile() {
             type: 'list',
             message: 'What is the title of your project?',
             // Am am not sure which licenses you wanted in the list as I did not see any specifications, so I added all the ones from the github licenses dropdown.
-            choices: ['Apache license 2.0', 'GNU General Public License v3.0', 'MIT License', 'BSD 2-clause "Simplified" license', 'BSD 3-clause "New" or "Revised" license', 'Boost Software License 1.0', 'Creative Commons Zero v1.0 Universal', 'Eclipse Public License 2.0', 'GNU Affero General Public License v3.0', 'GNU General Public License v2.0', 'GNU Lesser General Public License v2.1', 'Mozilla Public License 2.0', 'The Unlicense'],
+            choices: ['Apache license 2.0', 'GNU General Public License v3.0', 'MIT License', 'Boost Software License 1.0', 'GNU Affero General Public License v3.0'],
             name: 'license',
         },
         {
@@ -57,54 +57,18 @@ function writeToFile() {
             message: 'Please enter your email and other ways to get in contact with you.',
             name: 'email',
         },
-    ]).then((response) => 
-
-    fs.writeFile('README.md',
-    `# ${response.project}
-
-## Description
-    ${response.description}
-## Table of Contents (Optional)
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contribute](#contribute)
-- [License](#license)
-- [Tests](#tests)
-- [Questions](#questions)
+    ]).then((data) => {
     
-## Installation
-    
-    ${response.install}
-    
-## Usage
-    
-    ${response.usage}
+    licenseL = genMark.renderLicenseLink(data.license);
+    badge = genMark.renderLicenseBadge(data.license);
 
-## Contribute
-    
-    ${response.contribute}
-    
-## License
-    
-    ${response.license}
-
-## Tests
-
-    ${response.test}
-
-## Questions
-
-    ${response.github}
-    ${response.email}
-    ` , (err) =>
+    fs.writeFile('README.md', (genMark.generateMarkdown(data, licenseL, badge)) , (err) => {
     err ? console.error(err) : console.log('Success!')
-    )
+    });
+
+    }
     );
-
-
-
-    
+  
 }
 
 // TODO: Create a function to initialize app
